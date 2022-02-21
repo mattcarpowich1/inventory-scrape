@@ -4,7 +4,7 @@ import { InventoryItem } from './types';
 
 const URL = 'https://albumsurf.com/collections/new-boards';
 const INVENTORY_ITEM_SELECTOR = '.product-block';
-const PAGINATION_ELEMENT_SELECTOR = '.pagination__number'; 
+const PAGINATION_ELEMENT_SELECTOR = '.pagination__number';
 
 const db: Database = new Database();
 
@@ -17,7 +17,7 @@ const init = async () => {
         const numberOfPagesInventory = await page.$$eval(PAGINATION_ELEMENT_SELECTOR, items => items.length);
 
         for (let inventoryPageNumber = 0; inventoryPageNumber < numberOfPagesInventory; inventoryPageNumber += 1) {
-      
+
             // go to the right page
             if (inventoryPageNumber > 0) {
                 await page.goto(`${URL}?page=${inventoryPageNumber + 1}`, {waitUntil: 'load', timeout: 0});
