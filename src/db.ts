@@ -42,7 +42,7 @@ class Database implements DatabaseInterface {
         const data: DatabaseTable = JSON.parse(fs.readFileSync(this.filePath, CHARACTER_ENCODING));
         const newData = {
             ...data,
-            [item.productId]: item.title
+            [item.productId]: item.title,
         };
         fs.writeFileSync(this.filePath, JSON.stringify(newData, null, 4), CHARACTER_ENCODING);
     }

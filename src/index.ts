@@ -30,7 +30,7 @@ const init = async () => {
                     const title = item.querySelector('.product-block__title')?.textContent;
                     return {
                         productId,
-                        title
+                        title,
                     };
                 })
             );
