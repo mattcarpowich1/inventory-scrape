@@ -1,2 +1,5 @@
-# inventory-scrape
-I just want to know when new surf boards are added to this one website
+
+# Inventory Scraper
+
+Currently set up to update me when new surfboards are added to Album Surf's website. 
+
