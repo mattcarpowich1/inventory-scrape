@@ -10,6 +10,9 @@
     "semi": ["error", "always"],
     "quotes": [2, "single"],
     "key-spacing": ["error", { "beforeColon": false }],
-    "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true }]
+    "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true }],
+    "@typescript-eslint/indent": ["error", 4],
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error"
   }
 }
