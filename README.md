@@ -1,5 +1,5 @@
 
 # Inventory Scraper
 
-Currently set up to update me when new surfboards are added to Album Surf's website. 
+Creating a bot that checks/notifies me when new surfboards are added to a website. Hopefully this will curb my online shopping addiction. 
 
