@@ -1,54 +1,38 @@
-import puppeteer from 'puppeteer';
-import Database from './db';
-import { InventoryItem } from './types';
+import { GraphQLClient, gql } from 'graphql-request';
+import dotenv from 'dotenv';
 
-const URL = 'https://albumsurf.com/collections/new-boards';
-const INVENTORY_ITEM_SELECTOR = '.product-block';
-const PAGINATION_ELEMENT_SELECTOR = '.pagination__number';
-
-const db: Database = new Database();
+dotenv.config();
 
 const init = async () => {
-    const browser = await puppeteer.launch();
-    try {
-        const page = await browser.newPage();
-        await page.goto(URL, {waitUntil: 'load', timeout: 0});
-
-        const numberOfPagesInventory = await page.$$eval(PAGINATION_ELEMENT_SELECTOR, items => items.length);
-
-        for (let inventoryPageNumber = 0; inventoryPageNumber < numberOfPagesInventory; inventoryPageNumber += 1) {
-
-            // go to the right page
-            if (inventoryPageNumber > 0) {
-                await page.goto(`${URL}?page=${inventoryPageNumber + 1}`, {waitUntil: 'load', timeout: 0});
-            }
-
-            // Get the list of inventory items on each page
-            const latestInventory: InventoryItem[] = await page.$$eval(INVENTORY_ITEM_SELECTOR, items =>
-                items.map(item => {
-                    const productId = item.getAttribute('data-product-id');
-                    const title = item.querySelector('.product-block__title')?.textContent;
-                    return {
-                        productId,
-                        title,
-                    };
-                })
-            );
-
-            // If the item is not in the db, then add it
-            latestInventory.forEach((item: InventoryItem) => {
-                const existsInDb = !!(db.select().byPKey(item.productId));
-                if (!existsInDb) {
-                    db.upsert(item);
-                }
-            });
+    const client = new GraphQLClient(
+        process.env.GRAPH_ENDPOINT,
+        {
+            headers: {
+                'x-hasura-admin-secret': process.env.GRAPH_ADMIN_SECRET,
+            },
         }
+    );
 
-    } catch (e: unknown) {
-        console.log('Oh no!', e);
-    }
+    const vendorsQuery = gql`
+        {
+            vendors {
+                id
+                title
+                website
+                logo
+                streetAddress
+                city
+                state
+                postalCode
+                isActive
+            }
+        }
+    `;
 
-    await browser.close();
+    const data: unknown = await client.request(vendorsQuery);
+    console.log('data', data);
 };
 
-init();
+init()
+    .then(() => console.log('yay'))
+    .catch((e: unknown) => console.log('oh no!', e));
