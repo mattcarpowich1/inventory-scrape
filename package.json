@@ -4,7 +4,6 @@
   "description": "I just want to know when new surf boards are added to this one website",
   "main": "dist/index.js",
   "scripts": {
-    "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
