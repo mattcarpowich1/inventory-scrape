@@ -4,8 +4,12 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
+  "parserOptions": {
+    "project": ["./tsconfig.json"] // Specify it only for TypeScript files
+  },
   "rules": {
     "semi": ["error", "always"],
     "quotes": [2, "single"],

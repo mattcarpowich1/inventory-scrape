@@ -31,7 +31,7 @@ class Database implements DatabaseInterface {
     public select(): this {
         if (this.dbFileExists) {
             const data = fs.readFileSync(this.filePath, CHARACTER_ENCODING);
-            this.currentSelection = JSON.parse(data);
+            this.currentSelection = JSON.parse(data) as DatabaseTable;
         } else {
             throw new Error('Database file does not exist!');
         }
@@ -49,7 +49,7 @@ class Database implements DatabaseInterface {
     public upsert(item: InventoryItem): void {
         let data: DatabaseTable;
         if (this.dbFileExists) {
-            data = JSON.parse(fs.readFileSync(this.filePath, CHARACTER_ENCODING));
+            data = JSON.parse(fs.readFileSync(this.filePath, CHARACTER_ENCODING)) as DatabaseTable;
         } else {
             data = {};
         }
