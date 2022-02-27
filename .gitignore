@@ -3,3 +3,5 @@ dist
 db.json
 formatt.txt
 .env
+src/generated
+graphql.schema.json

@@ -7,6 +7,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
+  "exclude": ["src/generated"],
   "parserOptions": {
     "project": ["./tsconfig.json"] // Specify it only for TypeScript files
   },
@@ -14,7 +15,7 @@
     "semi": ["error", "always"],
     "quotes": [2, "single"],
     "key-spacing": ["error", { "beforeColon": false }],
-    "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true }],
+    "@typescript-eslint/type-annotation-spacing": ["error", { "before": false, "after": true, "overrides": { "arrow": { "before": true, "after": true }} }],
     "@typescript-eslint/indent": ["error", 4],
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",

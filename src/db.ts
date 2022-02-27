@@ -5,10 +5,10 @@ const CHARACTER_ENCODING = 'utf-8';
 const DATABASE_FILE = 'db.json';
 
 interface DatabaseInterface {
-    select: ()=> DatabaseInterface;
-    all: ()=> DatabaseTable;
-    byPKey: (key: string)=> string;
-    upsert: (item: InventoryItem)=> void;
+    select: () => DatabaseInterface;
+    all: () => DatabaseTable;
+    byPKey: (key: string) => string;
+    upsert: (item: InventoryItem) => void;
 }
 
 export interface DatabaseTable {
