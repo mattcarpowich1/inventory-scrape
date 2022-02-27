@@ -6,6 +6,7 @@ scalar Date
 
 type Query {
     getVendors: [Vendor]
+    queryBoardExists(input: QueryBoardExistsInput!): Board
 }
 
 input BoardInput {
@@ -20,6 +21,11 @@ input BoardInput {
     volume: Float
     created_at: Date
     updated_at: Date
+}
+
+input QueryBoardExistsInput {
+    vendorId: Int,
+    vendorProductId: String
 }
 
 type Mutation {
