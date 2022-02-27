@@ -1,12 +1,32 @@
 schema {
-  query: Query
+    query: Query
 }
+
+scalar Date
 
 type Query {
-  getVendors: [Vendors]
+    getVendors: [Vendor]
 }
 
-type Vendors {
+input BoardInput {
+    id: ID!
+    vendorId: Int
+    vendorProductId: Int
+    title: String
+    price: Int
+    height: Int
+    width: String
+    thickness: String
+    volume: Float
+    created_at: Date
+    updated_at: Date
+}
+
+type Mutation {
+    insertBoard(input: BoardInput!): Board
+}
+
+type Vendor {
     id: ID!
     title: String
     website: String
@@ -16,4 +36,18 @@ type Vendors {
     state: String
     postalCode: String
     isActive: Boolean
+}
+
+type Board {
+    id: ID!
+    vendorId: Int
+    vendorProductId: Int
+    title: String
+    price: Int
+    height: Int
+    width: String
+    thickness: String
+    volume: Float
+    created_at: Date
+    updated_at: Date
 }
