@@ -1,0 +1,19 @@
+schema {
+  query: Query
+}
+
+type Query {
+  getVendors: [Vendors]
+}
+
+type Vendors {
+    id: ID!
+    title: String
+    website: String
+    logo: String
+    streetAddress: String
+    city: String
+    state: String
+    postalCode: String
+    isActive: Boolean
+}
