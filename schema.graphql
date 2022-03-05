@@ -33,7 +33,7 @@ type Mutation {
 }
 
 type Vendor {
-    id: ID!
+    id: Int
     title: String
     website: String
     logo: String

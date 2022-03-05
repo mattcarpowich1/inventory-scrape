@@ -1,14 +1,12 @@
 import puppeteer from 'puppeteer';
-import Database from './db';
-import { InventoryItem } from './types';
+import { Board } from '../generated/graphql';
 
-const URL = 'https://albumsurf.com/collections/new-boards';
-const INVENTORY_ITEM_SELECTOR = '.product-block';
-const PAGINATION_ELEMENT_SELECTOR = '.pagination__number';
+type ScrapedBoard = Omit<Board, 'id'>
 
-const db: Database = new Database();
-
-const init = async () => {
+const albumScrapeRoutine = async (vendorId: number) => {
+    const URL = 'https://albumsurf.com/collections/new-boards';
+    const INVENTORY_ITEM_SELECTOR = '.product-block';
+    const PAGINATION_ELEMENT_SELECTOR = '.pagination__number';
     const browser = await puppeteer.launch();
     try {
         const page = await browser.newPage();
@@ -24,23 +22,25 @@ const init = async () => {
             }
 
             // Get the list of inventory items on each page
-            const latestInventory: InventoryItem[] = await page.$$eval(INVENTORY_ITEM_SELECTOR, items =>
+            const latestInventory: ScrapedBoard[] = await page.$$eval(INVENTORY_ITEM_SELECTOR, items =>
                 items.map(item => {
                     const productId = item.getAttribute('data-product-id');
                     const title = item.querySelector('.product-block__title')?.textContent;
                     return {
                         productId,
                         title,
+                        vendorId,
                     };
                 })
             );
 
             // If the item is not in the db, then add it
-            latestInventory.forEach((item: InventoryItem) => {
-                const existsInDb = !!(db.select().byPKey(item.productId));
-                if (!existsInDb) {
-                    db.upsert(item);
-                }
+            latestInventory.forEach((item: ScrapedBoard) => {
+                // const existsInDb = !!(db.select().byPKey(item.productId));
+                // if (!existsInDb) {
+                //     db.upsert(item);
+                // }
+                console.log(item);
             });
         }
 
@@ -51,6 +51,4 @@ const init = async () => {
     await browser.close();
 };
 
-init()
-    .then(() => console.log('done'))
-    .catch(() => console.log('oh no!'));
+export default albumScrapeRoutine;
