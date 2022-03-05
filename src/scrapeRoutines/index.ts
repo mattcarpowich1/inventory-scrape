@@ -16,6 +16,7 @@ const ScrapeRoutines: ScrapeRoutinesType = {
 };
 
 const scrapeInventoryFromVendor = (vendor: Vendor) => {
+    console.log('vendor', vendor);
     const scrapeRoutineTitle = vendor.title;
     if (!isValidScrapeRoutine(scrapeRoutineTitle)) {
         throw new Error(`Scrape routine does not exist for vendor with title ${vendor.title}`);

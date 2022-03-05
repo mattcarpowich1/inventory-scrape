@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import { Board } from '../generated/graphql';
+import insertBoard from '../insertBoard';
 
 type ScrapedBoard = Omit<Board, 'id'>
 
@@ -27,21 +28,21 @@ const albumScrapeRoutine = async (vendorId: number) => {
                     const productId = item.getAttribute('data-product-id');
                     const title = item.querySelector('.product-block__title')?.textContent;
                     return {
-                        productId,
+                        vendorProductId: productId,
                         title,
-                        vendorId,
+                        inStock: true,
                     };
                 })
             );
 
+            const inventoryWithVendorIds = latestInventory.map(i => ({ ...i, vendorId }));
+
             // If the item is not in the db, then add it
-            latestInventory.forEach((item: ScrapedBoard) => {
-                // const existsInDb = !!(db.select().byPKey(item.productId));
-                // if (!existsInDb) {
-                //     db.upsert(item);
-                // }
-                console.log(item);
-            });
+            for (const scrapedBoard of inventoryWithVendorIds) {
+                // TODO: check if the board exists first and update
+                // instead of always adding
+                await insertBoard(scrapedBoard);
+            }
         }
 
     } catch (e: unknown) {

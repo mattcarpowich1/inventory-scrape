@@ -10,9 +10,8 @@ type Query {
 }
 
 input BoardInput {
-    id: ID!
     vendorId: Int
-    vendorProductId: Int
+    vendorProductId: String
     title: String
     price: Int
     height: Int
@@ -47,7 +46,7 @@ type Vendor {
 type Board {
     id: ID!
     vendorId: Int
-    vendorProductId: Int
+    vendorProductId: String
     title: String
     price: Int
     height: Int

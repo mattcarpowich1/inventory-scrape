@@ -1,5 +1,5 @@
 import getVendors from './getVendors';
-import scrapeInventoryFromVendor from './scrapeRoutines';
+import scrapeInventoryFromVendor from './scrapeRoutines/index';
 
 const init = async () => {
     const vendors = await getVendors();

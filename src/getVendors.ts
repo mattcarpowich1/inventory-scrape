@@ -6,8 +6,8 @@ interface VendorsQueryResponse {
     vendors: Vendor[]
 }
 
-export const vendorsQuery = gql`
-    {
+export const getVendorsQuery = gql`
+    query getVendors{
         vendors {
             id
             title
@@ -24,7 +24,7 @@ export const vendorsQuery = gql`
 
 const getVendors = async (): Promise<Vendor[]> => {
     try {
-        const data: VendorsQueryResponse = await client.request(vendorsQuery);
+        const data: VendorsQueryResponse = await client.request(getVendorsQuery);
         return data.vendors;
     } catch (e: unknown) {
         throw new Error(`Error querying vendors: ${e as string}`);
