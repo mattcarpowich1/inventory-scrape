@@ -3,7 +3,9 @@ import scrapeInventoryFromVendor from './scrapeRoutines/index';
 
 const init = async () => {
     const vendors = await getVendors();
-    vendors.forEach(scrapeInventoryFromVendor);
+    for (const vendor of vendors) {
+        await scrapeInventoryFromVendor(vendor);
+    }
 };
 
 init()
