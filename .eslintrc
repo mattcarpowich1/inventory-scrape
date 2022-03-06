@@ -7,10 +7,10 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
-  "exclude": ["src/generated"],
   "parserOptions": {
     "project": ["./tsconfig.json"] // Specify it only for TypeScript files
   },
+  "ignorePatterns": ["src/generated"],
   "rules": {
     "semi": ["error", "always"],
     "quotes": [2, "single"],
@@ -21,6 +21,6 @@
     "@typescript-eslint/no-explicit-any": "error",
     "comma-dangle": ["error", "always-multiline"],
     "no-trailing-spaces": "error",
-    "eol-last": "error"
+    "eol-last": "error",
   }
 }
