@@ -4,21 +4,21 @@ import { BoardInput } from './generated/graphql';
 
 type InsertBoardFunction = (input: BoardInput) => Promise<void>;
 
-export const insertBoardMutation = gql`
+export const upsertBoardMutation = gql`
     mutation insertBoard($input: boards_insert_input!) {
-        insert_boards_one(object: $input)
+        insert_boards_one(object: $input, upsert: true)
         {
             id
         }
     }
 `;
 
-const insertBoard: InsertBoardFunction = async (input: BoardInput) => {
+const upsertBoard: InsertBoardFunction = async (input: BoardInput) => {
     try {
-        await client.request(insertBoardMutation, { input });
+        await client.request(upsertBoardMutation, { input });
     } catch (e: unknown) {
         throw new Error(`Error inserting board ${input.title}: ${e as string}`);
     }
 };
 
-export default insertBoard;
+export default upsertBoard;

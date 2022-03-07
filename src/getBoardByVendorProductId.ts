@@ -21,7 +21,7 @@ const getBoardsByVendorProductId = async (vendorId: number, vendorProductId: str
         });
         return data.boards;
     } catch (e: unknown) {
-        throw new Error(`Error querying boards by vendor product it: ${e as string}`);
+        throw new Error(`Error querying boards by vendor product id: ${e as string}`);
     }
 };
 

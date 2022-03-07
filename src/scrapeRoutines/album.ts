@@ -1,6 +1,11 @@
 import puppeteer from 'puppeteer';
+import dotenv from 'dotenv';
+import getBoardByVendorProductId from '../getBoardByVendorProductId';
 import { Board } from '../generated/graphql';
-import insertBoard from '../insertBoard';
+import upsertBoard from '../upsertBoard';
+import { sendSmsMessage } from '../aws';
+
+dotenv.config();
 
 type ScrapedBoard = Omit<Board, 'id'>
 
@@ -39,9 +44,13 @@ const albumScrapeRoutine = async (vendorId: number) => {
 
             // If the item is not in the db, then add it
             for (const scrapedBoard of inventoryWithVendorIds) {
-                // TODO: check if the board exists first and update
-                // instead of always adding
-                await insertBoard(scrapedBoard);
+                const matchingBoards = await getBoardByVendorProductId(scrapedBoard.vendorId, scrapedBoard.vendorProductId);
+                if (!matchingBoards.length) {
+                    await sendSmsMessage(process.env.MY_PHONE_NUMBER, `
+                        New board! ${scrapedBoard.title}
+                    `);
+                }
+                await upsertBoard(scrapedBoard);
             }
         }
 
