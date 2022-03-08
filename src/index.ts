@@ -1,5 +1,6 @@
 import getVendors from './getVendors';
 import scrapeInventoryFromVendor from './scrapeRoutines/index';
+import AWS from 'aws-sdk';
 
 const init = async () => {
     const vendors = await getVendors();

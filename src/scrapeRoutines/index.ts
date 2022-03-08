@@ -2,6 +2,11 @@ import { ScrapeRoutinesType, ScrapeRoutinesEnum } from '../types';
 import { Vendor } from '../generated/graphql';
 import albumScrapeRoutine from './album';
 
+export interface ScrapeRoutineInterface {
+    url: string;
+    boardExistsInDb: () => Promise<void>;
+}
+
 const ScrapeRoutines: ScrapeRoutinesType = {
     [ScrapeRoutinesEnum.ALBUM]: albumScrapeRoutine,
 };
